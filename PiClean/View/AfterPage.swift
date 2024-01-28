@@ -19,14 +19,13 @@ struct AfterPage: View {
             ZStack{
                 
                 Background()
-                
-               // VStack {
-                    
+
                    if  let image2 = vm.selectedImage2{
                         
                         BandF()
                     }
-                    else{
+                    else
+                    {
                         VStack(alignment: .center) {
             
                 Text("This spot is an absolute mess!")
@@ -54,7 +53,6 @@ struct AfterPage: View {
                                 Text("I'm ready")
                                     .font(.system(size: 24))
                                     .foregroundColor(.white)
-                                //.bold()
                                     .accessibilityLabel("This is a button to get started")
                                 
                             }  .padding(.top, geometry.size.height * 0.79)
@@ -62,8 +60,6 @@ struct AfterPage: View {
                         }
     
                     }
-    
-                //} //end ZStack
                 
             }// end geo
             
@@ -75,7 +71,6 @@ struct AfterPage: View {
             } // end fullScreenCover
         }
     }
-    
         struct accessCameraView: UIViewControllerRepresentable {
             
             @Binding var selectedImage2: UIImage?
@@ -123,14 +118,16 @@ struct AfterPage: View {
                         let output = try model.prediction(input: PiCleanClassifier_1Input(image: pixelBuffer))
                         // Access and handle the model's output
                         self.vm.classificationResult2 = output.target
+                        if vm.classificationResult2 == "Clean"{
+                            self.vm.Count += 1
+                        }
+                       
                         print("Classification result: \(self.vm.classificationResult2)")
                         
                     } catch {
                         print("Error: \(error)")
-                    }
-                    
+                    }                  
                 }
-                
             }
             
             func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

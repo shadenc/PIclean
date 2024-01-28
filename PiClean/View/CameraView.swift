@@ -47,7 +47,7 @@ struct CameraView: View {
     @State private var showClass = false
     @State private var isShowingSheet = false
     @EnvironmentObject var vm : ViewModel
-
+    
     var body: some View {
         GeometryReader { geometry in
             
@@ -56,14 +56,14 @@ struct CameraView: View {
                     AfterPage()
                 }
                 else{
-                  
+                    
                     ZStack{
                         
                         Background()
                         
-                           
+                        
                         VStack (alignment: .center , spacing: 30) {
-
+                            
                             Text("Lets Save Our Planet!")
                                 .font(.largeTitle)
                                 .foregroundColor(Color.white)
@@ -71,7 +71,7 @@ struct CameraView: View {
                             
                             
                             
-                            Image("dirtyyplanet")
+                            Image(imageName)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 250, height: 250)
@@ -97,20 +97,19 @@ struct CameraView: View {
                                 
                                 
                             }  .padding(.top, geometry.size.height * 0.3)
-              
+                            
                         }
                         
                     }
-                    
+                
                     
                     .fullScreenCover(isPresented: self.$showCamera ) {
                         accessCameraView(selectedImage1: $vm.selectedImage1)
                             .interactiveDismissDisabled()
                             .ignoresSafeArea()
-                          
+                        
                         
                     } // end fullScreenCover
-                    
                     
                     .sheet(isPresented: $isShowingSheet) {
                         
@@ -134,7 +133,6 @@ struct CameraView: View {
                                     .fontWeight(.medium)
                                     .foregroundColor(Color.textcolor)
                                     .multilineTextAlignment(.center)
-                                  
                                 
                                 
                                 Button(action: {
@@ -152,12 +150,10 @@ struct CameraView: View {
                                             .font(.system(size: 24))
                                             .foregroundColor(.white)
                                         
-                                        .accessibilityLabel("Take a Photo button")
+                                            .accessibilityLabel("Take a Photo button")
                                         
                                     }
-                                    
-                                    
-                                    
+                                   
                                 }.padding(.top, 140)
                             }
                             
@@ -168,22 +164,68 @@ struct CameraView: View {
                         }
                         
                     }
+                  
                     
+                    if vm.classificationResult2 == "UnClean" {
+                        Text("UnClean")
+                            .opacity(0)
+                            .alert(isPresented: $vm.isShowingUnCleanAlert) {
+                                Alert(
+                                    title: Text(NSLocalizedString("Oopss!! You didn't clean will", comment: "")),
+                                    dismissButton: .default(Text("Try Again"))
+                                )
+                            }
+                        //  imageName()
+                    }
                     
-                   
-          }
-                
-                
+                    if vm.classificationResult2 == "Clean" {
+                        
+                        Text("Clean")
+                            .opacity(0)
+                        
+                            .alert(isPresented: $vm.isShowingCleanAlert) {
+                                Alert(
+                                    
+                                    title: Text(NSLocalizedString("Thank you for the positive impact you've made on the environment", comment: "")),
+                                    dismissButton: .default(Text("Continue"))
+                                )
+                                
+                            }
+                    }
+                }
+           
             }
-            
-            
+ 
         }
-        
+        //
+        var imageName: String {
+            print(vm.Count)
+            //if vm.classificationResult2 == "Clean"{
+               // vm.appCount()
+                
+                if vm.Count == 1 {
+                    return "Clean1"
+                    
+                }
+              else  if vm.Count == 2 {
+                    return "Clean2"
+                }
+            else  if vm.Count == 3 {
+                    return "Clean3"
+                    
+                }
+            else  if vm.Count >= 4{
+                    return "cleanPlanet"
+                }
+           // }
+           
+                return "DirtyPlanet"
+       
+        }
 
     }
     
-
-}
+    
     struct accessCameraView: UIViewControllerRepresentable {
         
         @Binding var selectedImage1: UIImage?
@@ -207,54 +249,55 @@ struct CameraView: View {
         }
     } //SwiftUI representation of a UIViewController that uses the camera to capture an image.
     
-class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    var picker: accessCameraView
-    let model: PiCleanClassifier_1
-    var classificationResult1: String?
-    
-    init(picker: accessCameraView) {
-        self.picker = picker
-        self.model = PiCleanClassifier_1()
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+        var picker: accessCameraView
+        let model: PiCleanClassifier_1
+        var classificationResult1: String?
         
-        super.init()
-    }
-    
-    func processImage(_ image: UIImage) {
-        if let pixelBuffer = image.pixelBuffer() {
-            do {
-                let output = try model.prediction(input: PiCleanClassifier_1Input(image: pixelBuffer))
-                // Access and handle the model's output
-                self.classificationResult1 = output.target
+        init(picker: accessCameraView) {
+            self.picker = picker
+            self.model = PiCleanClassifier_1()
+            
+            super.init()
+        }
+        
+        func processImage(_ image: UIImage) {
+            if let pixelBuffer = image.pixelBuffer() {
+                do {
+                    let output = try model.prediction(input: PiCleanClassifier_1Input(image: pixelBuffer))
+                    // Access and handle the model's output
+                    self.classificationResult1 = output.target
+                    
+                    print("Classification result: \( self.classificationResult1)")
+                    
+                } catch {
+                    print("Error: \(error)")
+                }
                 
-                print("Classification result: \( self.classificationResult1)")
-                
-            } catch {
-                print("Error: \(error)")
             }
             
         }
         
+        
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            guard let selectedImage1 = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
+                return
+            }
+            self.picker.selectedImage1 = selectedImage1
+            processImage(selectedImage1)
+            
+            //selectedImage variable represents the image selected or captured by the user using the camera
+            
+            self.picker.isPresented.wrappedValue.dismiss()
+        } // This function gets called when the user has selected or taken a photo using the camera
+        
+        
+        
+        
+        
+        
     }
-    
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let selectedImage1 = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
-            return
-        }
-        self.picker.selectedImage1 = selectedImage1
-        processImage(selectedImage1)
-        
-        //selectedImage variable represents the image selected or captured by the user using the camera
-        
-        self.picker.isPresented.wrappedValue.dismiss()
-    } // This function gets called when the user has selected or taken a photo using the camera
-    
-    
-    
-    
-    
-    
-} 
+}
     #Preview {
        CameraView()
             .environment(\.locale, .init(identifier:"PiClean"))

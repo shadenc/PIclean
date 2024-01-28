@@ -60,17 +60,17 @@ struct BandF: View {
                      
                             switch result {
                             case "Clean":
-                                self.vm.isShowingCleanAlert?.toggle()
+                                self.vm.isShowingCleanAlert.toggle()
                                 print("Clean")
                             case "UnClean":
-                                self.vm.isShowingUnCleanAlert?.toggle()
+                                self.vm.isShowingUnCleanAlert.toggle()
                                 print("UnClean")
                             default:
                                 BandF()
                                 print("Default")
                             }
-                        
                        }
+                    
                     
                     }) {
                         

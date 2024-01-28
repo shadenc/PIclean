@@ -17,6 +17,10 @@ struct PiCleanApp: App {
             splash()
                 .environmentObject(vm)
                 .preferredColorScheme(.dark)
+                .onAppear{
+                    //vm.Count = 0
+                    print(vm.Count)
+                }
 
             
         }
