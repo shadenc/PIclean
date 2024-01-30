@@ -14,13 +14,17 @@ struct PiCleanApp: App {
     var body: some Scene {
         WindowGroup {
        
-            splash()
+        
+           OnBording()
+            //splash()
                 .environmentObject(vm)
                 .preferredColorScheme(.dark)
                 .onAppear{
                     //vm.Count = 0
                     print(vm.Count)
+                    print(vm.Count2)
                 }
+//                .environment(\.colorScheme, .dark)
 
             
         }

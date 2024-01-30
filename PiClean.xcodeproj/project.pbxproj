@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		133BE6CB2B5FD87A00808AC3 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133BE6CA2B5FD87A00808AC3 /* Background.swift */; };
 		133BE6CD2B5FD98B00808AC3 /* AfterPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133BE6CC2B5FD98B00808AC3 /* AfterPage.swift */; };
+		27919C752B691BBB004A44AB /* OnBording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27919C742B691BBB004A44AB /* OnBording.swift */; };
 		2927A36D2B5D8F12008848E2 /* splash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2927A36C2B5D8F12008848E2 /* splash.swift */; };
 		2927A36F2B5D8FC1008848E2 /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2927A36E2B5D8FC1008848E2 /* Color.xcassets */; };
 		87239C912B5FFABE004090FC /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87239C902B5FFABE004090FC /* ViewModel.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		133BE6CA2B5FD87A00808AC3 /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		133BE6CC2B5FD98B00808AC3 /* AfterPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterPage.swift; sourceTree = "<group>"; };
+		27919C742B691BBB004A44AB /* OnBording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBording.swift; sourceTree = "<group>"; };
 		2927A36C2B5D8F12008848E2 /* splash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = splash.swift; sourceTree = "<group>"; };
 		2927A36E2B5D8FC1008848E2 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		87239C902B5FFABE004090FC /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			children = (
 				133BE6CA2B5FD87A00808AC3 /* Background.swift */,
 				2927A36C2B5D8F12008848E2 /* splash.swift */,
+				27919C742B691BBB004A44AB /* OnBording.swift */,
 				8792CC2F2B59545500970D97 /* CameraView.swift */,
 				133BE6CC2B5FD98B00808AC3 /* AfterPage.swift */,
 				87239C922B5FFC8C004090FC /* BandF.swift */,
@@ -191,6 +194,7 @@
 				8792CC212B59540400970D97 /* PiCleanApp.swift in Sources */,
 				87239C912B5FFABE004090FC /* ViewModel.swift in Sources */,
 				133BE6CB2B5FD87A00808AC3 /* Background.swift in Sources */,
+				27919C752B691BBB004A44AB /* OnBording.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,7 +328,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PiClean/Preview Content\"";
-				DEVELOPMENT_TEAM = ST876TKNHL;
+				DEVELOPMENT_TEAM = Q9YNMRMTZ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "The app Wants to access your Camera ";
@@ -354,7 +358,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PiClean/Preview Content\"";
-				DEVELOPMENT_TEAM = ST876TKNHL;
+				DEVELOPMENT_TEAM = Q9YNMRMTZ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "The app Wants to access your Camera ";

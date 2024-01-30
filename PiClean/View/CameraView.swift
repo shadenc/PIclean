@@ -156,7 +156,7 @@ struct CameraView: View {
                                    
                                 }.padding(.top, 140)
                             }
-                            
+                            .environment(\.colorScheme, .dark)
                             .presentationDetents([.medium, .large])
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .background(Color("SheetColor"))
@@ -175,6 +175,8 @@ struct CameraView: View {
                                     dismissButton: .default(Text("Try Again"))
                                 )
                             }
+                            .preferredColorScheme(.dark)
+
                         //  imageName()
                     }
                     
@@ -195,6 +197,7 @@ struct CameraView: View {
                 }
            
             }
+            .preferredColorScheme(.dark)
  
         }
         //

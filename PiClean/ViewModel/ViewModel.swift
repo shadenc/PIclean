@@ -15,6 +15,7 @@ final class ViewModel: ObservableObject{
     @Published var isShowingCleanAlert: Bool = false
     @Published var isShowingUnCleanAlert: Bool = false
     @AppStorage ("Count") var Count: Int = 0
+    @AppStorage ("Count2") var Count2: Int = 0
 //        func appCount() {
 //            self.Count += 1
 //    }
