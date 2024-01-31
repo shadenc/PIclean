@@ -9,24 +9,42 @@ import SwiftUI
 
 @main
 struct PiCleanApp: App {
-    @StateObject var vm = ViewModel()
+@StateObject var vm = ViewModel()
 
     var body: some Scene {
         WindowGroup {
        
-        
-           OnBording()
-            //splash()
-                .environmentObject(vm)
-                .preferredColorScheme(.dark)
-                .onAppear{
-                    //vm.Count = 0
-                    print(vm.Count)
-                    print(vm.Count2)
+            Group{
+                //           OnBording()
+                if vm.hasOnboarding{
+                    
+                    CameraView()
                 }
-//                .environment(\.colorScheme, .dark)
+                else{
+                   splash()
+                        .onDisappear {
+                            vm.hasOnboarding = true
+                        }
 
-            
+
+                        .preferredColorScheme(.dark)
+                        .onAppear{
+                            //vm.Count = 0
+                            print(vm.Count)
+                            print(vm.hasOnboarding)
+//                            vm.hasOnboarding = true
+                            
+                        }
+                }
+                
+                
+                
+            }
+            .environmentObject(vm)
+//.onAppear{
+////                //test only
+//     vm.hasOnboarding = false
+// }
         }
     }
 }

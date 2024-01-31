@@ -1,52 +1,85 @@
 import SwiftUI
 
 struct splash: View {
-    
-@State private var showPage = false
-@EnvironmentObject var vm : ViewModel
-var body: some View {
+    @State private var showPage = false
+    var body: some View {
         
-
         ZStack {
             
             Color.black
-            
                 .ignoresSafeArea()
             
             VStack(spacing: 40) {
                 
-                Button(action: {
-                    self.showPage.toggle()
-                }){
-                    Text("Skip").padding(15)
-                        .foregroundColor(.white)
+                VStack{
                     
                     
+                    Button(action: {
+                        self.showPage.toggle()
+                    }){
+                        Spacer()
+                        Text("Skip").padding(15)
+                            .foregroundColor(.white)
+                    }
+                    .fullScreenCover(isPresented: $showPage) {
+                        CameraView()
+                    }
                 }
-             
+                    
                 Image("cleanPlanet").resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 300, height: 300)
-                    .offset(y: 100)
+                    .offset(y: 10)
                 
                 
-                PageView()
+                    
+                    
+                    var splashes: [AnyView] = [AnyView(Splash1()), AnyView(Splash2())]
+                    
+                    
+                    GeometryReader{ geometry in
+                        TabView {
+                            ForEach(0..<splashes.count) { i in
+                                splashes[i]
+                                    .clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
+                                    .padding([.top, .bottom], 60)
+                                    .padding([.leading, .trailing], 10)
+                            }
+                        }
+                        .frame(width: geometry.size.width)
+                        .tabViewStyle(PageTabViewStyle())
+                    }
+                }
+                //                Button(action: {
+                //                    self.showPage.toggle()
+                //                }){
+                //                    Spacer()
+                //                    Text("Skip").padding(15)
+                //                    .foregroundColor(.blue)
+                //                }
+                //                .fullScreenCover(isPresented: $showPage) {
+                //                    CameraView()
+                //
+                //            }
                 
-            }
+                //                Image("cleanPlanet").resizable()
+                //                    .aspectRatio(contentMode: .fit)
+                //                    .frame(width: 300, height: 300)
+                //                    .offset(y: 10)
+                
+                
+                //                PageView()
+                
+                
+                
+                
+                
+            } .foregroundColor(.white) .multilineTextAlignment(.center)
             
-        }.foregroundColor(.white) .multilineTextAlignment(.center)
-        
-            .fullScreenCover(isPresented: $showPage) {
-                CameraView()
-            }
-    
-    onAppear() {
-        vm.Count2 += 1
+        }/*.foregroundColor(.white) .multilineTextAlignment(.center)*/
     }
-   
     
-    }
-   
+    
     
     struct Splash1: View {
         
@@ -106,25 +139,25 @@ var body: some View {
         
     }
     
-    struct PageView: View {
-        var splashes: [AnyView] = [AnyView(Splash1()), AnyView(Splash2())]
-        
-        var body: some View {
-            GeometryReader{ geometry in
-                TabView {
-                    ForEach(0..<splashes.count) { i in
-                        splashes[i]
-                            .clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
-                            .padding([.top, .bottom], 60)
-                            .padding([.leading, .trailing], 10)
-                    }
-                }
-                .frame(width: geometry.size.width)
-                .tabViewStyle(PageTabViewStyle())
-            }
-        }
-    }
-}
+    //    struct PageView: View {
+    //        var splashes: [AnyView] = [AnyView(Splash1()), AnyView(Splash2())]
+    //
+    //        var body: some View {
+    //            GeometryReader{ geometry in
+    //                TabView {
+    //                    ForEach(0..<splashes.count) { i in
+    //                        splashes[i]
+    //                            .clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
+    //                            .padding([.top, .bottom], 60)
+    //                            .padding([.leading, .trailing], 10)
+    //                    }
+    //                }
+    //                .frame(width: geometry.size.width)
+    //                .tabViewStyle(PageTabViewStyle())
+    //            }
+    //        }
+    //    }
+
 #Preview {
     splash()
 }

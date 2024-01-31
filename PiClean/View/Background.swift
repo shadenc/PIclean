@@ -8,10 +8,31 @@
 import SwiftUI
 
 struct Background: View {
+@State private var showHelp = false
     var body: some View {
-        ZStack {
-        // Color.black.edgesIgnoringSafeArea(.all)
+        
+        HStack {
 
+            Button(action: {
+                self.showHelp.toggle()
+            }) {
+                Image(systemName: "questionmark.circle")
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    
+                    .foregroundColor(.blue)
+                    
+            }.padding( .trailing, 300)
+            .padding(.bottom, 700 )
+            .fullScreenCover(isPresented: $showHelp) {
+                splash()
+            }
+
+        }
+        ZStack {
+        
+            
+      
             ImagesView(imageNames: ["Image1", "Image2", "Image3", "Image4","Image5","Image6","Image7","Image8","Image9","Image10","Image11","Image12","Image13","Image15","Image16","Image17","Image16","Image19","Image20","Image21","Image22"])
                         }
                     }

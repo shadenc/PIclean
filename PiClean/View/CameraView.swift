@@ -5,12 +5,14 @@ import Vision
 
 extension UIImage: Identifiable
 {
-    func pixelBuffer() -> CVPixelBuffer? {
-        let attrs = [kCVPixelBufferCGImageCompatibilityKey: kCFBooleanTrue,
+    
+func pixelBuffer() -> CVPixelBuffer? {
+    
+let attrs = [kCVPixelBufferCGImageCompatibilityKey: kCFBooleanTrue,
                      kCVPixelBufferCGBitmapContextCompatibilityKey: kCFBooleanTrue] as CFDictionary
         
-        var pixelBuffer: CVPixelBuffer?
-        let status = CVPixelBufferCreate(kCFAllocatorDefault,
+var pixelBuffer: CVPixelBuffer?
+let status = CVPixelBufferCreate(kCFAllocatorDefault,
                                          Int(self.size.width),
                                          Int(self.size.height),
                                          kCVPixelFormatType_32ARGB,
@@ -43,21 +45,22 @@ extension UIImage: Identifiable
 
 struct CameraView: View {
     
-    @State private var showCamera = false
-    @State private var showClass = false
-    @State private var isShowingSheet = false
-    @EnvironmentObject var vm : ViewModel
+@State private var showCamera = false
+@State private var showClass = false
+@State private var isShowingSheet = false
+@EnvironmentObject var vm : ViewModel
     
-    var body: some View {
-        GeometryReader { geometry in
+var body: some View {
+GeometryReader { geometry in
             
             VStack {
                 if let image1 = vm.selectedImage1 {
                     AfterPage()
                 }
+                
                 else{
                     
-                    ZStack{
+            ZStack {
                         
                         Background()
                         
@@ -203,8 +206,10 @@ struct CameraView: View {
         //
         var imageName: String {
             print(vm.Count)
-            //if vm.classificationResult2 == "Clean"{
-               // vm.appCount()
+            
+            //if vm.˜˜clasbnificationResult2 == "Clean"{
+
+            // vm.appCount()
                 
                 if vm.Count == 1 {
                     return "Clean1"
@@ -220,6 +225,7 @@ struct CameraView: View {
             else  if vm.Count >= 4{
                     return "cleanPlanet"
                 }
+            
            // }
            
                 return "DirtyPlanet"
@@ -229,7 +235,9 @@ struct CameraView: View {
     }
     
     
-    struct accessCameraView: UIViewControllerRepresentable {
+    struct accessCameraView:
+                                
+    UIViewControllerRepresentable {
         
         @Binding var selectedImage1: UIImage?
         @Environment(\.presentationMode) var isPresented
@@ -250,7 +258,10 @@ struct CameraView: View {
             return Coordinator(picker: self)
             
         }
-    } //SwiftUI representation of a UIViewController that uses the camera to capture an image.
+    } 
+    
+    //SwiftUI representation of a UIViewController that uses the camera to capture an image.
+    
     
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
         var picker: accessCameraView
@@ -293,12 +304,7 @@ struct CameraView: View {
             
             self.picker.isPresented.wrappedValue.dismiss()
         } // This function gets called when the user has selected or taken a photo using the camera
-        
-        
-        
-        
-        
-        
+       
     }
 }
     #Preview {
