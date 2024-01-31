@@ -134,7 +134,7 @@ GeometryReader { geometry in
                                 Text(" Lets make a positive impact together")
                                     .font(.title3)
                                     .fontWeight(.medium)
-                                    .foregroundColor(Color.textcolor)
+                                    .foregroundColor(Color.gray)
                                     .multilineTextAlignment(.center)
                                 
                                 

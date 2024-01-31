@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct PiCleanApp: App {
+    
 @StateObject var vm = ViewModel()
 
     var body: some Scene {
+        
         WindowGroup {
        
             Group{
@@ -36,15 +38,13 @@ struct PiCleanApp: App {
                             
                         }
                 }
-                
-                
-                
+             
             }
             .environmentObject(vm)
-//.onAppear{
-////                //test only
-//     vm.hasOnboarding = false
-// }
+.onAppear{
+//                //test only
+     vm.hasOnboarding = false
+ }
         }
     }
 }

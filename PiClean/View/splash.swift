@@ -19,7 +19,7 @@ struct splash: View {
                     }){
                         Spacer()
                         Text("Skip").padding(15)
-                            .foregroundColor(.white)
+                            .foregroundColor(.gray)
                     }
                     .fullScreenCover(isPresented: $showPage) {
                         CameraView()
@@ -34,12 +34,12 @@ struct splash: View {
                 
                     
                     
-                    var splashes: [AnyView] = [AnyView(Splash1()), AnyView(Splash2())]
+                let splashes: [AnyView] = [AnyView(Splash1()), AnyView(Splash2())]
                     
                     
                     GeometryReader{ geometry in
                         TabView {
-                            ForEach(0..<splashes.count) { i in
+                            ForEach(0..<splashes.count , id: \.self) { i in
                                 splashes[i]
                                     .clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
                                     .padding([.top, .bottom], 60)
