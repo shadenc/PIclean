@@ -19,11 +19,10 @@ struct PiCleanApp: App {
                             vm.hasOnboarding = true
                         }
 
-
                         .preferredColorScheme(.dark)
                         .onAppear{
                              //TEST ONLY
-                          //  vm.Count = 0
+                            vm.Count = 0
                             print(vm.Count)
                             print(vm.hasOnboarding)
                         }

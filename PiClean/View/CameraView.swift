@@ -48,6 +48,7 @@ struct CameraView: View {
 @State private var showCamera = false
 @State private var showClass = false
 @State private var isShowingSheet = false
+@State private var isFlipped = false
 @EnvironmentObject var vm : ViewModel
     
 var body: some View {
@@ -61,10 +62,8 @@ GeometryReader { geometry in
                 else{
                     
             ZStack {
-                        
                         Background()
-                        
-                        
+                       
                         VStack (alignment: .center , spacing: 30) {
                             
                             Text("Lets Save Our Planet!")
@@ -72,17 +71,20 @@ GeometryReader { geometry in
                                 .foregroundColor(Color.white)
                                 .multilineTextAlignment(.center)
                                 .background(
-                                              Rectangle()
-                                                  .foregroundColor(Color.black)
-                                                  .cornerRadius(10)
+                                    Rectangle()
+                                    .foregroundColor(Color.black)
+                                    .cornerRadius(10)
                                           )
                             
                             Image(imageName)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 250, height: 250)
-                            
-                            
+                                .rotation3DEffect(
+                                    Angle(degrees: isFlipped ? 180 : 0),
+                                    axis: (x: 0.0, y: 1.0, z: 0.0)
+                                )
+                             
                             Button(action: {
                                 isShowingSheet.toggle()
                                 
@@ -106,7 +108,6 @@ GeometryReader { geometry in
                         
                     }
                 
-                    
                     .fullScreenCover(isPresented: self.$showCamera ) {
                         accessCameraView(selectedImage1: $vm.selectedImage1)
                             .interactiveDismissDisabled()
@@ -167,37 +168,39 @@ GeometryReader { geometry in
                             
                         }
                         
+                    }.onDisappear(){
+                        
                     }
                     
                     if vm.classificationResult2 == "UnClean" {
                         Text("UnClean")
                             .opacity(0)
-                            .alert(isPresented: $vm.isShowingUnCleanAlert) {
-                                Alert(
-                                    title: Text(NSLocalizedString("Oopss!! You didn't clean well", comment: "")),
-                                    dismissButton: .default(Text("Try Again"))
-                                )
-                            }
-                            .preferredColorScheme(.dark)
+                            .alert("Oopss!! You didn't clean well", isPresented: $vm.isShowingUnCleanAlert, actions: {
+                                Button("Try Again") {
+                                    withAnimation(.easeInOut(duration: 0.5)) {
+                                                self.isFlipped.toggle()
+                                            }
+                                }
+                            })
                     }
                     
                     if vm.classificationResult2 == "Clean" {
                         
                         Text("Clean")
                             .opacity(0)
-                            .alert(isPresented: $vm.isShowingCleanAlert) {
-                                Alert(
-                                    title: Text(NSLocalizedString("Thank you for the positive impact you've made on the environment", comment: "")),
-                                    dismissButton: .default(Text("Continue"))
-                                )
+                            .alert("Thank you for the positive impact you've made on the environment", isPresented: $vm.isShowingCleanAlert, actions: {
                                 
-                        }
+                                Button("Continue") {
+                                    withAnimation(.easeInOut(duration: 0.5)) {
+                                                self.isFlipped.toggle()
+                                            }
+                                }
+                            })
+                            }
                     }
                 }
-           
             }
             .preferredColorScheme(.dark)
- 
         }
         var imageName: String {
             print(vm.Count)
@@ -213,7 +216,7 @@ GeometryReader { geometry in
             else  if vm.Count >= 4{
                     return "cleanPlanet"
                 }
-     
+          
             return "DirtyPlanet"
         }//change the planet based on the progress
 
@@ -283,7 +286,7 @@ GeometryReader { geometry in
             self.picker.isPresented.wrappedValue.dismiss()
         } // This function gets called when the user has selected or taken a photo using the camera
        
-    }
+   // }
 }
     #Preview {
        CameraView()

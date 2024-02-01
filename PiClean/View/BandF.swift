@@ -61,7 +61,6 @@ struct BandF: View {
                         .multilineTextAlignment(.center)
                         .bold()
                         .foregroundColor(.white)
-                    
                         .background(
                                       Rectangle()
                                           .foregroundColor(Color.black)
