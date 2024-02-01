@@ -18,12 +18,22 @@ struct BandF: View {
                         Text("Before")
                             .font(.headline)
                             .lineSpacing(22)
-                            .foregroundColor(.white);
+                            .foregroundColor(.white)
+                            .background(
+                                          Rectangle()
+                                              .foregroundColor(Color.black)
+                                              .cornerRadius(10)
+                                      )
                         
                         Text("After")
                             .font(.headline)
                             .lineSpacing(22)
                             .foregroundColor(.white)
+                            .background(
+                                          Rectangle()
+                                              .foregroundColor(Color.black)
+                                              .cornerRadius(10)
+                                      )
                     }
                     
                     HStack{
@@ -47,12 +57,18 @@ struct BandF: View {
                     }
                     
                     
-                    Text("The power of small details \n leading to remarkable results !")
+                    Text("The power of small details leading to remarkable results !")
+                        .multilineTextAlignment(.center)
                         .bold()
                         .foregroundColor(.white)
+                    
+                        .background(
+                                      Rectangle()
+                                          .foregroundColor(Color.black)
+                                          .cornerRadius(10)
+                                  )
                 }
                     
-            
                 Button(action: {
                     vm.selectedImage1 = nil
                     vm.selectedImage2 = nil
@@ -66,12 +82,9 @@ struct BandF: View {
                                 self.vm.isShowingUnCleanAlert.toggle()
                                 print("UnClean")
                             default:
-                                BandF()
                                 print("Default")
                             }
                        }
-                    
-                    
                     }) {
                         
                         ZStack{

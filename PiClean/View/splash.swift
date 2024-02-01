@@ -12,8 +12,6 @@ struct splash: View {
             VStack(spacing: 40) {
                 
                 VStack{
-                    
-                    
                     Button(action: {
                         self.showPage.toggle()
                     }){
@@ -25,14 +23,6 @@ struct splash: View {
                         CameraView()
                     }
                 }
-                    
-                Image("cleanPlanet").resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 300, height: 300)
-                    .offset(y: 10)
-                
-                
-                    
                     
                 let splashes: [AnyView] = [AnyView(Splash1()), AnyView(Splash2())]
                     
@@ -50,114 +40,74 @@ struct splash: View {
                         .tabViewStyle(PageTabViewStyle())
                     }
                 }
-                //                Button(action: {
-                //                    self.showPage.toggle()
-                //                }){
-                //                    Spacer()
-                //                    Text("Skip").padding(15)
-                //                    .foregroundColor(.blue)
-                //                }
-                //                .fullScreenCover(isPresented: $showPage) {
-                //                    CameraView()
-                //
-                //            }
-                
-                //                Image("cleanPlanet").resizable()
-                //                    .aspectRatio(contentMode: .fit)
-                //                    .frame(width: 300, height: 300)
-                //                    .offset(y: 10)
-                
-                
-                //                PageView()
-                
-                
-                
-                
-                
+
             } .foregroundColor(.white) .multilineTextAlignment(.center)
             
-        }/*.foregroundColor(.white) .multilineTextAlignment(.center)*/
-    }
-    
-    
-    
-    struct Splash1: View {
-        
-        var body: some View {
-            VStack(spacing: 40) {
-                Text("Think green, keep it clean!")
-                    .font(.system(size: 30))
-                
-                Text("Help us make this earth squeaky clean by showing off your cleaning skills!")
-                    .font(.system(size: 19))
-                    .foregroundColor(.gray)
-            }
-            .foregroundColor(.white)
-            .multilineTextAlignment(.center)
         }
     }
     
     
-    struct Splash2: View {
+    
+struct Splash1: View {
         
         var body: some View {
-            
-            VStack(spacing: 20) {
-                Text("How it works")
-                    .font(.system(size: 30))
+            GeometryReader { geometry in
                 
-                Text("""
+                VStack(spacing: 40) {
+                    
+                    Image("cleanPlanet").resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 300, height: 300)
+                    
+                    Text("Think green, keep it clean!")
+                        .font(.system(size: 30))
+                    
+                    Text("Help us make this earth squeaky clean by showing off your cleaning skills!")
+                        .font(.system(size: 19))
+                        .foregroundColor(.gray)
+                }
+                .foregroundColor(.white)
+                .multilineTextAlignment(.center)
+            }
+        }
+    }
+    
+    
+struct Splash2: View {
+        
+        var body: some View {
+            GeometryReader { geometry in
+                VStack(spacing: 20) {
+                    
+                    Image("cleanPlanet").resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 310, height: 310)
+    
+                    Text("How it works")
+                        .font(.system(size: 30))
+                    
+                    Text("""
                 1. Spot it: Find a messy spot.
                 2. Snap it: Capture the 'before' snapshot.
                 3. Clean it: Work your magic!
                 4. Snap it again: Document the spotless victory!
                 """).lineSpacing(10)
-                    .font(.system(size: 20))
-                    .foregroundColor(.gray)
-                
-                
-                //                    Button(action: {
-                //                        self.showPage.toggle()
-                //                    }){
-                //                        Text("Skip").padding(15)
-                //                        .foregroundColor(.white)
-                //                    }
-                //                    .fullScreenCover(isPresented: $showPage) {
-                //                        CameraView()
-                //
-                //                }
+                        .font(.system(size: 20))
+                        .foregroundColor(.gray)
+              
+                }
+                .foregroundColor(.white)
+                .multilineTextAlignment(.center)
+                .edgesIgnoringSafeArea(.all)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(.black))
                 
             }
-            .foregroundColor(.white)
-            .multilineTextAlignment(.center)
-            .edgesIgnoringSafeArea(.all) // Fill the entire screen
-            .frame(maxWidth: .infinity, maxHeight: .infinity) // Fill the entire screen.navigationBarHidden(true)
-            
-            .background(Color(.black))
-            
         }
         
     }
     
-    //    struct PageView: View {
-    //        var splashes: [AnyView] = [AnyView(Splash1()), AnyView(Splash2())]
-    //
-    //        var body: some View {
-    //            GeometryReader{ geometry in
-    //                TabView {
-    //                    ForEach(0..<splashes.count) { i in
-    //                        splashes[i]
-    //                            .clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
-    //                            .padding([.top, .bottom], 60)
-    //                            .padding([.leading, .trailing], 10)
-    //                    }
-    //                }
-    //                .frame(width: geometry.size.width)
-    //                .tabViewStyle(PageTabViewStyle())
-    //            }
-    //        }
-    //    }
-
+  
 #Preview {
     splash()
 }

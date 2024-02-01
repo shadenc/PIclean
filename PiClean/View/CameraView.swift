@@ -54,7 +54,7 @@ var body: some View {
 GeometryReader { geometry in
             
             VStack {
-                if let image1 = vm.selectedImage1 {
+                if vm.selectedImage1 != nil {
                     AfterPage()
                 }
                 
@@ -71,8 +71,11 @@ GeometryReader { geometry in
                                 .font(.largeTitle)
                                 .foregroundColor(Color.white)
                                 .multilineTextAlignment(.center)
-                            
-                            
+                                .background(
+                                              Rectangle()
+                                                  .foregroundColor(Color.black)
+                                                  .cornerRadius(10)
+                                          )
                             
                             Image(imageName)
                                 .resizable()
@@ -82,7 +85,6 @@ GeometryReader { geometry in
                             
                             Button(action: {
                                 isShowingSheet.toggle()
-                                
                                 
                             }) {
                                 ZStack{
@@ -98,7 +100,6 @@ GeometryReader { geometry in
                                         .accessibilityLabel("This is a button to get started")
                                 }
                                 
-                                
                             }  .padding(.top, geometry.size.height * 0.3)
                             
                         }
@@ -111,7 +112,6 @@ GeometryReader { geometry in
                             .interactiveDismissDisabled()
                             .ignoresSafeArea()
                         
-                        
                     } // end fullScreenCover
                     
                     .sheet(isPresented: $isShowingSheet) {
@@ -121,9 +121,12 @@ GeometryReader { geometry in
                                 Spacer()
                                     .frame(height: 50)
                                 
-                                Text(" Snap a quick pic to grab your mess, how things are right know before we jumpn into cleaning ")
+                                Text("""
+                                     Snap a quick picture of your current 
+                                     mess, before starting to clean up.
+                                     """)
                                 
-                                    .font(.title3)
+                                .font(.title2)
                                     .fontWeight(.medium)
                                     .foregroundColor(Color.white)
                                     .multilineTextAlignment(.center)
@@ -146,9 +149,7 @@ GeometryReader { geometry in
                                             .fill(Color("ButtonColor"))
                                             .frame(width:155, height: 50, alignment: .center)
                                             .cornerRadius(12)
-                                        
-                                        
-                                        
+                                       
                                         Text("Take a Photo")
                                             .font(.system(size: 24))
                                             .foregroundColor(.white)
@@ -167,35 +168,30 @@ GeometryReader { geometry in
                         }
                         
                     }
-                  
                     
                     if vm.classificationResult2 == "UnClean" {
                         Text("UnClean")
                             .opacity(0)
                             .alert(isPresented: $vm.isShowingUnCleanAlert) {
                                 Alert(
-                                    title: Text(NSLocalizedString("Oopss!! You didn't clean will", comment: "")),
+                                    title: Text(NSLocalizedString("Oopss!! You didn't clean well", comment: "")),
                                     dismissButton: .default(Text("Try Again"))
                                 )
                             }
                             .preferredColorScheme(.dark)
-
-                        //  imageName()
                     }
                     
                     if vm.classificationResult2 == "Clean" {
                         
                         Text("Clean")
                             .opacity(0)
-                        
                             .alert(isPresented: $vm.isShowingCleanAlert) {
                                 Alert(
-                                    
                                     title: Text(NSLocalizedString("Thank you for the positive impact you've made on the environment", comment: "")),
                                     dismissButton: .default(Text("Continue"))
                                 )
                                 
-                            }
+                        }
                     }
                 }
            
@@ -203,37 +199,25 @@ GeometryReader { geometry in
             .preferredColorScheme(.dark)
  
         }
-        //
         var imageName: String {
             print(vm.Count)
-            
-            //if vm.˜˜clasbnificationResult2 == "Clean"{
-
-            // vm.appCount()
-                
                 if vm.Count == 1 {
                     return "Clean1"
-                    
                 }
               else  if vm.Count == 2 {
                     return "Clean2"
                 }
             else  if vm.Count == 3 {
                     return "Clean3"
-                    
                 }
             else  if vm.Count >= 4{
                     return "cleanPlanet"
                 }
-            
-           // }
-           
-                return "DirtyPlanet"
-       
-        }
+     
+            return "DirtyPlanet"
+        }//change the planet based on the progress
 
     }
-    
     
     struct accessCameraView:
                                 
@@ -260,9 +244,6 @@ GeometryReader { geometry in
         }
     } 
     
-    //SwiftUI representation of a UIViewController that uses the camera to capture an image.
-    
-    
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
         var picker: accessCameraView
         let model: PiCleanClassifier_1
@@ -270,8 +251,7 @@ GeometryReader { geometry in
         
         init(picker: accessCameraView) {
             self.picker = picker
-            self.model = PiCleanClassifier_1()
-            
+            self.model = try! PiCleanClassifier_1(configuration: MLModelConfiguration())
             super.init()
         }
         
@@ -279,10 +259,8 @@ GeometryReader { geometry in
             if let pixelBuffer = image.pixelBuffer() {
                 do {
                     let output = try model.prediction(input: PiCleanClassifier_1Input(image: pixelBuffer))
-                    // Access and handle the model's output
                     self.classificationResult1 = output.target
-                    
-                    print("Classification result: \( self.classificationResult1)")
+                    print("Classification result: \( String(describing: self.classificationResult1))")
                     
                 } catch {
                     print("Error: \(error)")

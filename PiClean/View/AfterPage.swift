@@ -5,7 +5,6 @@ import Vision
 
 struct AfterPage: View {
     @State private var showCamera = false
-   // @State private var selectedImage2: UIImage?
     @State private var showClass = false
     @State private var classificationResult: String?
     @EnvironmentObject var vm : ViewModel
@@ -13,14 +12,10 @@ struct AfterPage: View {
 
 
     var body: some View {
-        
         GeometryReader { geometry in
-            
             ZStack{
-                
                 Background()
-
-                   if  let image2 = vm.selectedImage2{
+                if  vm.selectedImage2 != nil{
                         
                         BandF()
                     }
@@ -30,14 +25,16 @@ struct AfterPage: View {
             
                 Text("This spot is an absolute mess!")
                                 .font(Font.custom("SF Pro", size: 32))
-                                .foregroundColor(.white)
+                                .foregroundColor(.white)  
+                                
                             
                   Text("Clean it up then snap a quick pic to make your planet squeaky clean!")
                                 .font(Font.custom("SF Pro", size: 20))
                                 .foregroundColor(Color(red: 0.70, green: 0.70, blue: 0.70))
                                 .font(.caption)
-                            
-                        } .padding()
+                                .multilineTextAlignment(.center)
+
+                        }  .padding()
                         
                         Button(action: {
                             showCamera.toggle()
@@ -107,7 +104,7 @@ struct AfterPage: View {
             
             init(picker: accessCameraView , vm: ViewModel) {
                 self.picker = picker
-                self.model = PiCleanClassifier_1()
+                self.model = try! PiCleanClassifier_1(configuration: MLModelConfiguration())
                 self.vm = vm
                 super.init()
             }
@@ -116,13 +113,12 @@ struct AfterPage: View {
                 if let pixelBuffer = image.pixelBuffer() {
                     do {
                         let output = try model.prediction(input: PiCleanClassifier_1Input(image: pixelBuffer))
-                        // Access and handle the model's output
                         self.vm.classificationResult2 = output.target
                         if vm.classificationResult2 == "Clean"{
                             self.vm.Count += 1
                         }
                        
-                        print("Classification result: \(self.vm.classificationResult2)")
+                        print("Classification result: \(String(describing: self.vm.classificationResult2))")
                         
                     } catch {
                         print("Error: \(error)")
